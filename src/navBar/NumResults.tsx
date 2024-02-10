@@ -8,7 +8,7 @@ type NumResultsProps = {
 export const NumResults = ({movies}: NumResultsProps) => {
   return (
     <Box as="span">
-      Found {movies.length} results
+      {movies.length} results
     </Box>
   )
 }

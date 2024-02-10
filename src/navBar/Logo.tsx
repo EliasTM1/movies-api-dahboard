@@ -1,10 +1,7 @@
-import { Box, Heading } from "@chakra-ui/react"
+import { Box } from "@chakra-ui/react"
 
 export const Logo = () => {
   return (
-    <Box>
-      <Box as="span" role="img">🎬</Box>
-      <Heading>Movies</Heading>
-    </Box>
+      <Box as="span" role="img" fontSize="2rem">🎬</Box>
   )
 }

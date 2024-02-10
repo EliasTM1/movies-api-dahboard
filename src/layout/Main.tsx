@@ -1,6 +1,11 @@
+import { BoxProps } from "@chakra-ui/react"
 
-export const Main = () => {
+type mainProps = BoxProps & {
+  temp?: string 
+}
+
+export const Main = ({children}: mainProps) => {
   return (
-    <div>Main</div>
+    <div>{children}</div>
   )
 }
