@@ -1,5 +1,13 @@
 import { Movie } from "../MockData";
-import { Box, BoxProps, HStack, Heading, Img, Stack } from "@chakra-ui/react";
+import {
+	Box,
+	Text,
+	BoxProps,
+	HStack,
+	Heading,
+	Img,
+	Stack,
+} from "@chakra-ui/react";
 
 type MovieProps = BoxProps & {
 	movieDef: Movie;
@@ -7,15 +15,20 @@ type MovieProps = BoxProps & {
 };
 
 export const MovieItem = ({ movieDef, myCase }: MovieProps) => {
-	const { imdbID, poster, title, year } = movieDef;
+	console.log("MOV", movieDef);
+	const { ImdbID, Poster, Title, Year } = movieDef;
 	return (
 		<HStack gap={5} paddingBlock='1rem'>
-			<Img w={20} src={poster}></Img>
+			{Poster !== "N/A" ? (
+				<Img w={20} src={Poster}></Img>
+			) : (
+				<Text pr="1rem" fontSize='3rem'>🤔</Text>
+			)}
 
 			<Stack gap={1} alignSelf='flex-start'>
-				<Heading fontSize='1rem'>{title}</Heading>
+				<Heading fontSize='1rem'>{Title}</Heading>
 				{myCase === "info" ? (
-					<Heading fontSize='1rem'>🗓️ ({year})</Heading>
+					<Heading fontSize='1rem'>🗓️ ({Year})</Heading>
 				) : (
 					<HStack>
 						<Box>⭐️ 8.8</Box>

@@ -78,7 +78,6 @@ const RatingStar = ({
 	onHoverIn,
 	onHoverOut,
 }: RatingStarProps) => {
-	console.log(color);
 	return (
 		<Box
 			role='button'
