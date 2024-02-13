@@ -25,7 +25,6 @@ export const Rating = ({
 }: RatingProps) => {
 	const [rating, setRating] = useState<number>(defaultRating);
 	const [temporalRating, setTemporalRating] = useState(0);
-	console.log(setRating);
 
 	function handleRating(rating: number) {
 		setRating(rating);
@@ -35,8 +34,6 @@ export const Rating = ({
 	return (
 		<HStack>
 			{Array.from({ length: maxRating }, (_, i) => {
-				console.log(_);
-				console.log(i);
 				return (
 					<RatingStar
 						key={i}

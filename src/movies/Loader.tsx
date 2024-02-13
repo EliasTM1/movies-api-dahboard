@@ -12,6 +12,5 @@ export function Loader() {
 		? undefined
 		: `${spin} infinite 1s linear`;
 
-	// return <Image animation={animation} src={logo} />;
 	return <Text animation={animation} fontSize="3rem">🌮</Text>;
 }

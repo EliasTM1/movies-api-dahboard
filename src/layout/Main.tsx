@@ -1,11 +1,11 @@
-import { BoxProps } from "@chakra-ui/react"
+import { Box, BoxProps } from "@chakra-ui/react"
 
 type mainProps = BoxProps & {
   temp?: string 
 }
 
-export const Main = ({children}: mainProps) => {
+export const Main = ({children, ...props}: mainProps) => {
   return (
-    <div>{children}</div>
+    <Box {...props}>{children}</Box>
   )
 }

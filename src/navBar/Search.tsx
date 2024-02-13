@@ -1,21 +1,21 @@
-import { Button, Input } from "@chakra-ui/react";
-import { ChangeEvent } from "react";
+import { Input } from "@chakra-ui/react";
 
 type SearchProps = {
-	onInputChange: (query: ChangeEvent<HTMLInputElement>) => void;
+	currentQuery: string
+	onInputChange: (query: string) => void;
 };
 
-function handleQueryChange() {}
-export const Search = ({ onInputChange }: SearchProps) => {
+export const Search = ({ onInputChange, currentQuery }: SearchProps) => {
 	return (
-		<form onSubmit={handleQueryChange}>
+		<form>
 			<Input
 				border='1px solid gray'
 				width='50%'
 				placeholder='Look for your movie'
-				onChange={evento => onInputChange(evento)}
+				value={currentQuery}
+				onChange={evento => onInputChange(evento.target.value)}
+				w="350px"
 			/>
-			<Button type="submit"></Button>
 		</form>
 	);
 };

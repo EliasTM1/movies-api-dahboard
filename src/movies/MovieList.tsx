@@ -1,30 +1,30 @@
-import {  BoxProps, HStack, List, ListItem } from "@chakra-ui/react";
+import { BoxProps, List, ListItem, VStack } from "@chakra-ui/react";
 import { MovieItem } from "./Movie";
 import { Movie } from "../MockData";
-import { Loader } from "./Loader";
 
 type MovieListProps = BoxProps & {
 	movies: Movie[];
+	onSelectMovie: (id: string) => void
 };
 
-export const MovieList = ({ movies }: MovieListProps) => {
-	// if (movies.length === 0) {
-	// 	return <Box>Nothing under that name so far.</Box>;
-	// }
-	console.log("PELIS", movies);
-	if (movies.length)
-		return (
-			<HStack justifyContent='center' position='absolute'>
-				<Loader />
-			</HStack>
-		);
-	return movies.map((movie, index) => (
-		<List backgroundColor='brand.90' borderRadius='1rem' p='1rem' key={index}>
-			<ListItem>
-				<MovieItem myCase='info' movieDef={movie} />
-			</ListItem>
-		</List>
-	));
+export const MovieList = ({ movies, onSelectMovie }: MovieListProps) => {
+	return movies.length > 0 ? (
+		<VStack
+			backgroundColor='brand.90'
+			borderRadius='1rem'
+			p='1rem'
+			display='flex'
+			justifyContent='center'
+		>
+			<List alignSelf="flex-start" backgroundColor='brand.90' borderRadius='1rem' p='1rem'>
+				{movies.map((movie, index) => (
+					<ListItem key={index}>
+						<MovieItem handleIdChange={onSelectMovie} myCase='info' movieDef={movie} />
+					</ListItem>
+				))}
+			</List>
+		</VStack>
+	) : null;
 };
 
 // * Movie
