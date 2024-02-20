@@ -1,3 +1,4 @@
+import { DeleteIcon } from "@chakra-ui/icons";
 import { Movie, WatchedMovie } from "../MockData";
 import {
 	Box,
@@ -13,16 +14,15 @@ type MovieProps = BoxProps & {
 	movieDef: Movie | WatchedMovie;
 	myCase: "info" | "details";
 	handleIdChange?: (id: string) => void;
+	handleDeleteMovie? : (id: string) => void;
 };
 
-export const MovieItem = ({ movieDef, myCase, handleIdChange }: MovieProps) => {
+export const MovieItem = ({ movieDef, myCase, handleIdChange , handleDeleteMovie}: MovieProps) => {
 	const { Poster, Title, Year, imdbID } = movieDef;
 
 	function handleClick(id: string) {
-		console.log(id, "bib");
-		if (handleIdChange) {
-			handleIdChange(id);
-		} else return;
+		if (handleIdChange) handleIdChange(id);
+		return;
 	}
 
 	return (
@@ -57,6 +57,11 @@ export const MovieItem = ({ movieDef, myCase, handleIdChange }: MovieProps) => {
 						<Box>⭐️ 8.8</Box>
 						<Box>💡 90</Box>
 						<Box>⏰ 145 min</Box>
+						<DeleteIcon color="red" onClick={() => {
+							if(handleDeleteMovie) {
+								handleDeleteMovie(imdbID)
+							}
+						}}/>
 					</HStack>
 				)}
 			</Stack>

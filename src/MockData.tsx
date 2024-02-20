@@ -6,8 +6,8 @@ export type Movie = {
 };
 
 export type WatchedMovie = Movie & {
-	Runtime: number;
-	ImdbRating: number;
+	Runtime: string;
+	imdbRating: number;
 	UserRating?: number;
 };
 
@@ -70,8 +70,8 @@ export const tempWatchedData: WatchedMovie[] = [
 		Title: "Inception",
 		Year: "2010",
 		Poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-		Runtime: 148,
-		ImdbRating: 8.8,
+		Runtime: "148",
+		imdbRating: 8.8,
 		UserRating: 10,
 	},
 	{
@@ -79,8 +79,8 @@ export const tempWatchedData: WatchedMovie[] = [
 		Title: "Back to the Future",
 		Year: "1985",
 		Poster: "https://m.media-amazon.com/images/M/MV5BZmU0M2Y1OGUtZjIxNi00ZjBkLTg1MjgtOWIyNThiZWIwYjRiXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
-		Runtime: 116,
-		ImdbRating: 8.5,
+		Runtime: "116",
+		imdbRating: 8.5,
 		UserRating: 9,
 	},
 ];

@@ -1,34 +1,26 @@
-// import { useState } from "react";
 import { NumResults } from "./navBar/NumResults";
 import { Search } from "./navBar/Search";
-import { Box, HStack, Text } from "@chakra-ui/react";
+import { Box, HStack } from "@chakra-ui/react";
 import { MovieList } from "./movies/MovieList";
 import { WatchedMoviesList } from "./movies/WatchedMoviesList";
 import { Main } from "./layout/Main";
 import { WatchedSummary } from "./movies/WatchedSummary";
 import { NavBarV2 } from "./layout/NavBarV2";
-import { Rating } from "./components/rating/Rating";
 import { useEffect, useState } from "react";
 import { moviesApiKey } from "./keys";
 import { Loader } from "./movies/Loader";
 import { ErrorMessage } from "./components/Error/Error";
 import { MovieDetails } from "./movies/MovieDetails";
-import { CloseIcon } from "@chakra-ui/icons";
+import { WatchedMovie } from "./MockData";
 
 function App() {
-	// const [watched, setWatched] = useState(tempWatchedData);
-	// * Temporary
-	// const [selected, setSelected] = useState(false);
-	const [rting, setRting] = useState(0);
 	const [query, setQuery] = useState("");
 	const [error, setError] = useState("");
 	const [movieList, setMovieList] = useState([]);
+	const [watchedMovieList, setWatchedMovieList] = useState<WatchedMovie[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [selectedId, setSelectedId] = useState("");
-
-	function setRating(value: number) {
-		setRting(() => value);
-	}
+	// const [stats, setStats] = useState({});
 
 	function handleQueryChange(search: string) {
 		setQuery(search);
@@ -38,16 +30,38 @@ function App() {
 		setSelectedId(id);
 	}
 	function handleDetailReset() {
-		setSelectedId("")
+		setSelectedId("");
+	}
+	// Here we could also handle the update of certain added movie
+	function handleAddWatched(movie: WatchedMovie) {
+		setWatchedMovieList((previosState) => {
+			const preExistentMovie = previosState.filter((existentMovie) => {
+				if (existentMovie.imdbID === movie.imdbID) return existentMovie;
+			});
+
+			if (preExistentMovie.length) {
+				return [...previosState];
+			}
+
+			return [...previosState, movie];
+		});
+	}
+
+	function handleDeleteElement(id: string) {
+		setWatchedMovieList((previousState) => {
+			return previousState.filter((watchedMovie) => watchedMovie.imdbID !== id);
+		});
 	}
 
 	useEffect(
 		function () {
+			const controller = new AbortController();
 			async function getMeMovies() {
 				try {
 					setIsLoading(true);
 					const res = await fetch(
-						`http://www.omdbapi.com/?s=${query}&apikey=${moviesApiKey}`
+						`http://www.omdbapi.com/?s=${query}&apikey=${moviesApiKey}`,
+						{ signal: controller.signal }
 					);
 					if (!res.ok) {
 						throw new Error("Something went wrong fetching your data");
@@ -58,7 +72,9 @@ function App() {
 					}
 					setMovieList(data.Search);
 				} catch (error: Error) {
-					if (error.message && query !== "") setError(error.message);
+					if (error.name !== "AbortError") {
+						if (error.message && query !== "") setError(error.message);
+					}
 					// * Set the error
 				} finally {
 					setIsLoading(false);
@@ -70,7 +86,11 @@ function App() {
 				setError("");
 				return;
 			}
+			handleDetailReset()
 			getMeMovies();
+			return function () {
+				controller.abort();
+			};
 		},
 		[query]
 	);
@@ -97,26 +117,20 @@ function App() {
 						width='50%'
 					>
 						{selectedId ? (
-							<MovieDetails movieId={selectedId} />
+							<MovieDetails
+								movieId={selectedId}
+								onDetailReset={handleDetailReset}
+								onAddWatched={handleAddWatched}
+							/>
 						) : (
-							<>
-								<WatchedSummary />
-								<WatchedMoviesList />
-							</>
+							<Box padding='1rem'>
+								<WatchedSummary watchedMovies={watchedMovieList} />
+								<WatchedMoviesList
+									watchedList={watchedMovieList}
+									onDeleteMovie={handleDeleteElement}
+								/>
+							</Box>
 						)}
-						The current Rating is {rting}
-						{selectedId ? <CloseIcon
-							position='absolute'
-							right='1rem'
-							top='1rem'
-							backgroundClip='white'
-							boxSize={6}
-							onClick={handleDetailReset}
-							_hover={{
-								cursor: 'pointer'
-							}}
-						/>: null}
-						
 					</Box>
 				</HStack>
 			</Main>

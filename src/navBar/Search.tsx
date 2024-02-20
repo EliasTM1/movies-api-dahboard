@@ -10,6 +10,7 @@ export const Search = ({ onInputChange, currentQuery }: SearchProps) => {
 		<form>
 			<Input
 				border='1px solid gray'
+				color="white"
 				width='50%'
 				placeholder='Look for your movie'
 				value={currentQuery}

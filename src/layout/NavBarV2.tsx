@@ -14,7 +14,7 @@ export const NavBarV2 = ({ children }: NavBarV2Props) => {
 		>
 			<Logo></Logo>
 			<Heading color='brand.10' float='left' w='fit-content'>
-				Your Movies
+				Movietender
 			</Heading>
 			{children}
 		</HStack>

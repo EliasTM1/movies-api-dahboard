@@ -1,16 +1,16 @@
-import { Text, keyframes, usePrefersReducedMotion } from "@chakra-ui/react";
+import { Box, BoxProps, keyframes, usePrefersReducedMotion } from "@chakra-ui/react";
 
 const spin = keyframes`
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 `;
 
-export function Loader() {
+export function Loader({...props}:BoxProps) {
 	const prefersReducedMotion = usePrefersReducedMotion();
 
 	const animation = prefersReducedMotion
 		? undefined
 		: `${spin} infinite 1s linear`;
 
-	return <Text animation={animation} fontSize="3rem">🌮</Text>;
+	return <Box animation={animation} fontSize="3rem" {...props}>🌮</Box>;
 }
