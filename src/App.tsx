@@ -17,7 +17,11 @@ function App() {
 	const [query, setQuery] = useState("");
 	const [error, setError] = useState("");
 	const [movieList, setMovieList] = useState([]);
-	const [watchedMovieList, setWatchedMovieList] = useState<WatchedMovie[]>([]);
+	const [watchedMovieList, setWatchedMovieList] = useState<WatchedMovie[]>(function () {
+		const storedValue = localStorage.getItem("watcheMovies")
+		if(storedValue) return JSON.parse(storedValue)
+		else return []
+	});
 	const [isLoading, setIsLoading] = useState(false);
 	const [selectedId, setSelectedId] = useState("");
 	// const [stats, setStats] = useState({});
@@ -55,6 +59,13 @@ function App() {
 
 	useEffect(
 		function () {
+			localStorage.setItem("watcheMovies", JSON.stringify(watchedMovieList));
+		},
+		[watchedMovieList]
+	);
+
+	useEffect(
+		function () {
 			const controller = new AbortController();
 			async function getMeMovies() {
 				try {
@@ -86,7 +97,7 @@ function App() {
 				setError("");
 				return;
 			}
-			handleDetailReset()
+			handleDetailReset();
 			getMeMovies();
 			return function () {
 				controller.abort();
