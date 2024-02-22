@@ -1,13 +1,21 @@
 import { Input } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
+// import { useKey } from "../hooks/useKey";
 
 type SearchProps = {
 	currentQuery: string;
 	onInputChange: (query: string) => void;
+	onQuerySet: (query: string) => void;
 };
 
 export const Search = ({ onInputChange, currentQuery }: SearchProps) => {
 	const myRef = useRef<HTMLInputElement>(null);
+
+	// useKey("Enter", function () {
+	// 	if (document.activeElement === myRef.current) return;
+	// 	if (myRef.current) myRef.current.focus();
+	// 	onQuerySet("")
+	// })
 
 	useEffect(function () {
 		function callback(e: KeyboardEvent) {

@@ -5,6 +5,7 @@ import { moviesApiKey } from "../keys";
 import { MovieDetailsType, WatchedMovie } from "../MockData";
 import { Rating } from "../components/rating/Rating";
 import { CloseIcon } from "@chakra-ui/icons";
+import { useKey } from "../hooks/useKey";
 type MovieDetailsProps = {
 	movieId: string;
 	onDetailReset: () => void;
@@ -50,6 +51,7 @@ export const MovieDetails = ({
 	);
 	const [isLoading, setIsLoading] = useState(false);
 	const [userRating, setUserRating] = useState(0);
+	useKey("Escape", onDetailReset)
 	const {
 		Actors,
 		Awards,
@@ -81,19 +83,6 @@ export const MovieDetails = ({
 
 		onAddWatched(watchedMovie);
 	}
-	function callback(e: KeyboardEvent) {
-		if (e.code === "Escape") {
-			onDetailReset();
-		}
-	}
-
-	useEffect(function () {
-		document.addEventListener("keydown", callback);
-
-		return function () {
-			document.removeEventListener("keydown", callback);
-		};
-	}, []);
 
 	useEffect(
 		function getDetails() {

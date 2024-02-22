@@ -14,10 +14,10 @@ type WatchedSummaryProps = {
 };
 
 export const WatchedSummary = ({ watchedMovies }: WatchedSummaryProps) => {
-	let totalCouchTime: number = 0
-	watchedMovies.forEach(watcheMovie => {
-		totalCouchTime = Number(watcheMovie.Runtime) + totalCouchTime
-	})
+	let totalCouchTime: number = 0;
+	watchedMovies.forEach((watcheMovie) => {
+		totalCouchTime = Number(watcheMovie.Runtime) + totalCouchTime;
+	});
 	return watchedMovies.length ? (
 		<Box padding='1rem'>
 			<Heading>Your Stats</Heading>
